@@ -2,5 +2,14 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "mongoDs": {
+    "host": "localhost",
+    "port": 27017,
+    "database": "bookmark",
+    "username": "dineshvgp",
+    "password": "dineshi2it13$",
+    "name": "mongoDs",
+    "connector": "mongodb"
   }
 }
