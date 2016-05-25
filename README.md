@@ -17,6 +17,8 @@ A web app for organizing bookmarks.
   </pre>
 * Install Strongloop
   <pre>npm install -g strongloop</pre>
+* Install gulp
+  <pre>npm install -g gulp</pre>
 
 ##Start the server:
 <pre>npm start</pre>
