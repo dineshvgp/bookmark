@@ -3,22 +3,31 @@
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "mongodb": {
+      "allowExtendedOperators": true
+    }
   },
   "properties": {
     "name": {
-      "type": "string",
-      "required": true
-    }
+      "type": "string"
+    },
+    "bookmark": [
+      {
+        "id": {
+          "type": "String"
+        },
+        "title": {
+          "type": "String"
+        },
+        "link": {
+          "type": "String"
+        }
+      }
+    ]
   },
   "validations": [],
-  "relations": {
-    "bookmarks": {
-      "type": "hasMany",
-      "model": "bookmark",
-      "foreignKey": ""
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "*",
@@ -32,6 +41,20 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "addBookmark"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "find"
     }
   ],
   "methods": {}

@@ -24,10 +24,6 @@
     "dataSource": "mongoDs",
     "public": false
   },
-  "bookmark": {
-    "dataSource": "mongoDs",
-    "public": true
-  },
   "bookmarkFolder": {
     "dataSource": "mongoDs",
     "public": true
