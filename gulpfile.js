@@ -31,26 +31,19 @@ gulp.task("browserify:watch", function() {
   gulp.watch("./client/**/*.js", ["browserify"]);
 });
 
-//Copy bower js to assets
-gulp.task("bower:js", function() {
-  gulp.src(mainBowerFiles("**/*.js"))
-    .pipe(concat("bower.min.js"))
+//Copy bower js and custom js
+gulp.task("copy:js", function() {
+  gulp.src(["assets/js/**/*"])
+    .pipe(concat("main.js"))
     .pipe(uglify())
     .pipe(gulp.dest("public/assets"));
 });
 
-//Copy bower css
-gulp.task("bower:css", function() {
-  gulp.src(mainBowerFiles("**/*.css"))
-    .pipe(concat("bower.min.css"))
-    .pipe(minifyCSS())
-    .pipe(gulp.dest("public/assets"));
-});
-
-//Copy custom css
-gulp.task("css", function() {
+//Copy bower css and custom css
+gulp.task("copy:css", function() {
   gulp.src(["assets/css/**/*"])
     .pipe(concat("style.css"))
+    .pipe(minifyCSS())
     .pipe(gulp.dest("public/assets"));
 });
 
@@ -64,8 +57,7 @@ gulp.task("copy:fonts", function() {
 
 gulp.task("default", [
   "browserify",
-  "css",
-  "bower:js",
-  "bower:css",
+  "copy:js",
+  "copy:css",
   "copy:fonts"
 ]);
