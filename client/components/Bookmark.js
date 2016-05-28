@@ -35,9 +35,9 @@ export default class Bookmark extends Component {
   render() {
     const { bookmark, connectDragSource } = this.props;
     return connectDragSource(
-      <div>
-        title {bookmark.title}
-        link {bookmark.link}
+      <div className="bookmark-container">
+        <div> title: {bookmark.title} </div>
+        <div> link: {bookmark.link} </div>
       </div>
     );
   }

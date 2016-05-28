@@ -57,10 +57,10 @@ export default class Home extends Component {
    */
   onStoreChange = () => {
     let bookmarksFolder = BookmarkStore.getAllFolderBookmarks();
-    let bookmarks = _.find(bookmarksFolder, (folder) => !folder.name);
+    let bookmarks = _.find(bookmarksFolder, (folder) => folder.name === null);
     this.setState({
-      bookmarksFolder: _.reject(bookmarksFolder, (folder) => !folder.name),
-      bookmarks: bookmarks ? bookmarks.bookmark : []
+      bookmarksFolder: _.reject(bookmarksFolder, (folder) => folder.name === null),
+      bookmarks: bookmarks.bookmark || []
     });
   }
 
@@ -70,18 +70,7 @@ export default class Home extends Component {
    * @param  {String} bookmark The bookmark object
    */
   handleDrop(folderId, bookmark) {
-    this.setState(update(this.state, {
-      bookmarksFolder: {
-        [_.findIndex(this.state.bookmarksFolder, {id: folderId})]: {
-          bookmark: {
-            $push: [bookmark]
-          }
-        }
-      },
-      bookmarks: {
-        $splice: [[_.findIndex(this.state.bookmarks, {id: bookmark.id}), 1]]
-      }
-    }));
+    BookmarkStore.handleDrop(folderId, bookmark);
   }
 
   /**
@@ -94,19 +83,19 @@ export default class Home extends Component {
       <div class="container">
         <AddBookmark />
         <AddFolder />
-        <div id="folder">
+        <div id="folder" className="folder-wrapper">
           <h5>Folders</h5>
           {
             bookmarksFolder.map((folder) =>
               <BookmarksFolder
                 name={folder.name}
-                bookmarks={folder.bookmark}
+                bookmarks={folder.bookmark || []}
                 onDrop={(bookmark) => this.handleDrop(folder.id, bookmark)}
                 key={folder.id} />
             )
           }
         </div>
-        <div id="bookmark">
+        <div id="bookmark" className="bookmark-wrapper">
           <h5>Bookmarks</h5>
           {
             bookmarks.map((bookmark) =>

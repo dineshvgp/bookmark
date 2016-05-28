@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+//Actios and stores
+import BookmarkAction from "../actions/BookmarkAction";
 
 /**
  * Add Bookmark Component
@@ -44,7 +46,15 @@ export default class AddBookmark extends Component {
    * Call create bookmark action
    */
   onSubmit = () => {
-
+    let bookmark = this.state;
+    if(bookmark.title && bookmark.link) {
+      BookmarkAction.createBookmark(bookmark);
+      this.el.find("#create-bookmark").closeModal();
+      this.setState({
+        title: "",
+        link: ""
+      });
+    }
   }
   /**
    * render
@@ -53,7 +63,7 @@ export default class AddBookmark extends Component {
    */
   render() {
     return (
-      <div>
+      <div className="modal-wrapper">
         <a className="modal-trigger" href="#create-bookmark">Create Bookmark</a>
         <div id="create-bookmark" className="modal mini-modal">
           <div className="modal-header">

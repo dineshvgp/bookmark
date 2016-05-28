@@ -39,6 +39,33 @@ const BookmarkStore = _.extend({}, EventEmitter.prototype, {
    */
   getAllFolderBookmarks() {
     return _allFolderBookmarks;
+  },
+
+  /**
+   * Update the folder and bookmarks on drop
+   * @param  {String} folderId The folder id in which bookmark is getting moved
+   * @param  {String} bookmark The bookmark object
+   */
+  handleDrop(folderId, bookmark) {
+    //Find the Target folder obj and push the bookmark
+    let folder = _allFolderBookmarks[
+      _.findIndex(_allFolderBookmarks, {
+        id: folderId
+      })
+    ];
+    folder.bookmark = folder.bookmark || [];
+    folder.bookmark.push(bookmark);
+    //Find the source bookmark folder
+    let bookmarksWithoutFolder = _allFolderBookmarks[
+      _.findIndex(_allFolderBookmarks, {
+        name: null
+      })
+    ];
+    //Remove the source from it
+    bookmarksWithoutFolder.bookmark.splice(
+      _.findIndex(bookmarksWithoutFolder.bookmark, {id: bookmark.id}), 1
+    );
+    this.emit("change");
   }
 });
 
@@ -47,10 +74,34 @@ const BookmarkStore = _.extend({}, EventEmitter.prototype, {
  * @todo yet to handle errs
  */
 AppDispatcher.register(function(payload) {
-  switch (payload.actionType) {
+  let {actionType, data} = payload;
+  switch (actionType) {
     case Constants.ALL_FOLDER_WITH_BOOKMARKS:
       BookmarkApi.fetchAllFolders().then((response) => {
         _allFolderBookmarks = response.data;
+        BookmarkStore.emitChange();
+      }, (err)=> {
+        console.log("err", err);
+      });
+      break;
+    case Constants.CREATE_BOOKMARK:
+      BookmarkApi.createBookmark(data).then((response) => {
+        //Find the source bookmark folder
+        let bookmarksWithoutFolder = _allFolderBookmarks[
+          _.findIndex(_allFolderBookmarks, {
+            name: null
+          })
+        ];
+        bookmarksWithoutFolder.bookmark = bookmarksWithoutFolder.bookmark || [];
+        bookmarksWithoutFolder.bookmark.push(response.data);
+        BookmarkStore.emitChange();
+      }, (err)=> {
+        console.log("err", err);
+      });
+      break;
+    case Constants.CREATE_FOLDER:
+      BookmarkApi.createFolder(data).then((response) => {
+        _allFolderBookmarks.push(response.data);
         BookmarkStore.emitChange();
       }, (err)=> {
         console.log("err", err);

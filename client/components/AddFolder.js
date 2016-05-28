@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+//Actios and stores
+import BookmarkAction from "../actions/BookmarkAction";
 
 /**
  * Add AddFolder Component
@@ -43,7 +45,15 @@ export default class AddFolder extends Component {
    * Call create folder action
    */
   onSubmit = () => {
-
+    let folder = this.state;
+    if(folder) {
+      folder.bookmark = [];
+      BookmarkAction.createFolder(folder);
+      this.el.find("#create-folder").closeModal();
+      this.setState({
+        name: ""
+      });
+    }
   }
   /**
    * render
@@ -52,7 +62,7 @@ export default class AddFolder extends Component {
    */
   render() {
     return (
-      <div>
+      <div className="modal-wrapper">
         <a className="modal-trigger" href="#create-folder">Create Folder</a>
         <div id="create-folder" className="modal mini-modal">
           <div className="modal-header">

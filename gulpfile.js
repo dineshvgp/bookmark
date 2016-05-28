@@ -56,8 +56,8 @@ gulp.task("css", function() {
 
 //Copy fonts
 gulp.task("copy:fonts", function() {
-  gulp.src(["bower_components/Materialize/fonts/**/*"], {
-    base: "bower_components/Materialize"
+  gulp.src(["assets/fonts/**/*"], {
+    base: "assets"
   })
   .pipe(gulp.dest("public/assets"));
 });

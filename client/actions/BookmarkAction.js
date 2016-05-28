@@ -14,6 +14,26 @@ const BookmarkAction = {
     AppDispatcher.dispatch({
       actionType: Constants.ALL_FOLDER_WITH_BOOKMARKS
     });
+  },
+  /**
+  * Action to create bookmark
+  * @emits {Constants.CREATE_BOOKMARK}
+   */
+  createBookmark(bookmark) {
+    AppDispatcher.dispatch({
+      actionType: Constants.CREATE_BOOKMARK,
+      data: bookmark
+    });
+  },
+  /**
+  * Action to create bookmark
+  * @emits {Constants.CREATE_FOLDER}
+   */
+  createFolder(folder) {
+    AppDispatcher.dispatch({
+      actionType: Constants.CREATE_FOLDER,
+      data: folder
+    });
   }
 };
 

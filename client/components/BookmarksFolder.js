@@ -3,6 +3,7 @@
  * @ref: https://github.com/gaearon/react-dnd/blob/master/examples/01%20Dustbin/Multiple%20Targets/Dustbin.js
  */
 import React, { PropTypes, Component } from 'react';
+import {Link} from "react-router";
 import { DropTarget } from 'react-dnd';
 //components
 import Bookmark from './Bookmark';
@@ -41,12 +42,12 @@ export default class BookmarksFolder extends Component {
   render() {
     let { name, bookmarks, connectDropTarget } = this.props;
     return connectDropTarget(
-      <div>
-        <h5>{name}</h5>
+      <div className="folder-container">
+        <div className="folder-name">{name}</div>
         {
           bookmarks.map(({id, title, link}) =>
             <div key={id}>
-              {title} - {link}
+              <a href={link}>{title}</a>
             </div>
           )
         }
