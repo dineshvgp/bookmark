@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node .",
     "pretest": "jshint .",
-    "posttest": "nsp check"
+    "postinstall": "gulp browserify"
   },
   "dependencies": {
     "axios": "^0.11.1",
@@ -19,6 +19,8 @@
     "cors": "^2.5.2",
     "flux": "^2.1.1",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-uglify": "^1.5.3",
     "helmet": "^0.14.0",
     "keymirror": "^0.1.1",
     "loopback": "^2.22.0",
@@ -26,6 +28,7 @@
     "loopback-component-explorer": "^2.1.0",
     "loopback-connector-mongodb": "^1.15.2",
     "loopback-datasource-juggler": "^2.39.0",
+    "main-bower-files": "^2.13.1",
     "react": "^15.1.0",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",

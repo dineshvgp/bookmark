@@ -2,14 +2,16 @@
  * The Home Component
  * @ref: https://github.com/gaearon/react-dnd/blob/master/examples/01%20Dustbin/Multiple%20Targets/Container.js
  */
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import _ from "underscore";
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import update from 'react/lib/update';
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
+import update from "react/lib/update";
 //components
-import BookmarksFolder from './BookmarksFolder';
-import Bookmark from './Bookmark';
+import BookmarksFolder from "./BookmarksFolder";
+import Bookmark from "./Bookmark";
+import AddBookmark from "./AddBookmark";
+import AddFolder from "./AddFolder";
 //actions and stores
 import BookmarkAction from "../actions/BookmarkAction";
 import BookmarkStore from "../stores/BookmarkStore";
@@ -48,7 +50,6 @@ export default class Home extends Component {
   componentDidMount() {
     BookmarkStore.addChangeListener(this.onStoreChange);
     BookmarkAction.fetchAllFolders();
-
   }
 
   /**
@@ -56,9 +57,10 @@ export default class Home extends Component {
    */
   onStoreChange = () => {
     let bookmarksFolder = BookmarkStore.getAllFolderBookmarks();
+    let bookmarks = _.find(bookmarksFolder, (folder) => !folder.name);
     this.setState({
       bookmarksFolder: _.reject(bookmarksFolder, (folder) => !folder.name),
-      bookmarks: _.find(bookmarksFolder, (folder) => !folder.name).bookmark,
+      bookmarks: bookmarks ? bookmarks.bookmark : []
     });
   }
 
@@ -90,6 +92,8 @@ export default class Home extends Component {
     let { bookmarksFolder, bookmarks } = this.state;
     return (
       <div class="container">
+        <AddBookmark />
+        <AddFolder />
         <div id="folder">
           <h5>Folders</h5>
           {

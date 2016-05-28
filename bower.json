@@ -1,0 +1,21 @@
+{
+  "name": "bookmark",
+  "description": "A web app for organizing bookmarks",
+  "main": "server/server.js",
+  "authors": [
+    "dineshi2it<dinesh.vgp@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/dineshi2it/bookmark",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Materialize": "materialize#^0.97.6"
+  }
+}

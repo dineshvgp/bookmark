@@ -1,0 +1,17 @@
+/**
+ * Application custom css goes here
+ * @todo: Yet to implement scss
+ */
+
+.modal-header .head{
+  padding: 5px 10px;
+  border-bottom: 1px solid #9e9e9e;
+}
+
+.modal .modal-footer .btn.m-l-15 {
+  margin-left: 15px;
+}
+
+.input-field label {
+  left: 0.0rem;
+}
