@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from 'react';
 
 /**
  * Root container for react.
  * All the child components rendered here.
  */
-class AppContainer extends React.Component {
+export default class AppContainer extends Component {
   render() {
     return (
       <div>
@@ -13,5 +13,3 @@ class AppContainer extends React.Component {
     );
   }
 }
-
-export default AppContainer;
