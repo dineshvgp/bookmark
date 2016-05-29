@@ -43,6 +43,14 @@ import api from "axios";
    */
   deleteBookmark(data) {
     return api.delete(`/api/bookmarkFolders/${data.folderId}/bookmark/${data.bookmarkId}`);
+  },
+  /**
+   * Api to move bookmark
+   *
+   * @return {object} Promise
+   */
+  moveBookmark(data) {
+    return api.post(`/api/bookmarkFolders/${data.oldFolderId}/move/${data.newFolderId}`, data.bookmark);
   }
 };
 

@@ -17,6 +17,7 @@ const BookmarkAction = {
   },
   /**
   * Action to create bookmark
+  * @param {Object} The bookmark object includes title and link
   * @emits {Constants.CREATE_BOOKMARK}
    */
   createBookmark(bookmark) {
@@ -27,6 +28,7 @@ const BookmarkAction = {
   },
   /**
   * Action to create folder
+  * @param {Object} The folder object include name of the folder
   * @emits {Constants.CREATE_FOLDER}
    */
   createFolder(folder) {
@@ -37,6 +39,7 @@ const BookmarkAction = {
   },
   /**
   * Action to delete folder
+  * @param {String} id The folder id to be deleted
   * @emits {Constants.DELETE_FOLDER}
    */
   deleteFolder(id) {
@@ -47,11 +50,24 @@ const BookmarkAction = {
   },
   /**
   * Action to delete bookmark
+  * @param {Object} data The folder id and the bookmark id
   * @emits {Constants.DELETE_BOOKMARK}
    */
   deleteBookmark(data) {
     AppDispatcher.dispatch({
       actionType: Constants.DELETE_BOOKMARK,
+      data: data
+    });
+  },
+  /**
+   * Action to move bookmark to folder
+   * @param  {Object} data The data includes old folder id, new folder id,
+   * bookmark object
+   * @emits {Constants.MOVE_BOOKMARK}
+   */
+  moveBookmark(data) {
+    AppDispatcher.dispatch({
+      actionType: Constants.MOVE_BOOKMARK,
       data: data
     });
   }

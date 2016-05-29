@@ -46,11 +46,11 @@ const BookmarkStore = _.extend({}, EventEmitter.prototype, {
    * @param  {String} folderId The folder id in which bookmark is getting moved
    * @param  {String} bookmark The bookmark object
    */
-  handleDrop(folderId, bookmark) {
+  handleDrop(oldFolderId, newFolderId, bookmark) {
     //Find the Target folder obj and push the bookmark
     let folder = _allFolderBookmarks[
       _.findIndex(_allFolderBookmarks, {
-        id: folderId
+        id: newFolderId
       })
     ];
     folder.bookmark = folder.bookmark || [];
@@ -58,7 +58,7 @@ const BookmarkStore = _.extend({}, EventEmitter.prototype, {
     //Find the source bookmark folder
     let bookmarksWithoutFolder = _allFolderBookmarks[
       _.findIndex(_allFolderBookmarks, {
-        name: null
+        id: oldFolderId
       })
     ];
     //Remove the source from it
@@ -129,6 +129,14 @@ AppDispatcher.register(function(payload) {
           _.findIndex(folder.bookmark, {id: data.bookmarkId}), 1
         );
         BookmarkStore.emitChange();
+      }, (err)=> {
+        console.log("err", err);
+      });
+      break;
+    case Constants.MOVE_BOOKMARK:
+      const { oldFolderId, newFolderId, bookmark } = data;
+      BookmarkApi.moveBookmark(data).then((response) => {
+        BookmarkStore.handleDrop(oldFolderId, newFolderId, bookmark);
       }, (err)=> {
         console.log("err", err);
       });

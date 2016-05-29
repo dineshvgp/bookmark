@@ -121,4 +121,92 @@ module.exports = function(BookmarkFolder) {
       }
     }
   );
+
+  /**
+   * Update the bookmark folder with moved bookmark
+   * @param {String} folderId The folder id
+   * @param {Object} id The bookmark object
+   * @returns {Function(Error, Object)} cb
+   */
+  BookmarkFolder.moveBookmark = function(oldFolderId, newFolderId, bookmark, cb) {
+    function removeOld() {
+      BookmarkFolder.updateAll(
+        {
+          "id": oldFolderId
+        },
+        {
+          "$pull": {
+            "bookmark": {
+              id: new ObjectId(bookmark.id)
+            }
+          }
+        },
+        function (err, data) {
+          if(err) {
+            return cb(err);
+          }
+          cb(null, data);
+        }
+      );
+    }
+    bookmark.id = new ObjectId(bookmark.id);
+    BookmarkFolder.updateAll(
+      {
+        "id": newFolderId
+      },
+      {
+        "$push": {
+          "bookmark": bookmark
+        }
+      },
+      function (err, data) {
+        if(err) {
+          return cb(err);
+        }
+        removeOld();
+      }
+    );
+  }
+
+  BookmarkFolder.remoteMethod(
+    "moveBookmark",
+    {
+      description: "Update the bookmark folder with moved bookmark",
+      accepts: [
+        {
+          arg: "oldFolderId",
+          type: "string",
+          required: true,
+          description: "Old Folder id",
+          http: {
+            source: "path"
+          }
+        }, {
+          arg: "newFolderId",
+          type: "string",
+          required: true,
+          description: "New Folder id",
+          http: {
+            source: "path"
+          }
+        }, {
+          arg: "bookmark",
+          type: "object",
+          required: true,
+          description: "Bookmark object",
+          http: {
+            source: "body"
+          }
+        }
+      ],
+      returns: {
+        type: "object",
+        root: true
+      },
+      http: {
+        verb: "post",
+        path: "/:oldFolderId/move/:newFolderId"
+      }
+    }
+  );
 };

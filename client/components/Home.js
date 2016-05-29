@@ -68,8 +68,13 @@ export default class Home extends Component {
    * @param  {String} folderId The folder id in which bookmark is getting moved
    * @param  {String} bookmark The bookmark object
    */
-  handleDrop(folderId, bookmark) {
-    BookmarkStore.handleDrop(folderId, bookmark);
+  handleDrop(newFolderId, bookmark) {
+    const oldFolderId = this.state.bookmarks.id;
+    BookmarkAction.moveBookmark({
+      oldFolderId: oldFolderId,
+      newFolderId: newFolderId,
+      bookmark: bookmark
+    });
   }
 
   /**
