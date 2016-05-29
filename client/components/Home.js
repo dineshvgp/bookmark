@@ -33,7 +33,7 @@ export default class Home extends Component {
      */
     this.state = {
       bookmarksFolder : [],
-      bookmarks: []
+      bookmarks: {}
     }
   }
 
@@ -56,11 +56,10 @@ export default class Home extends Component {
    * Update the folder and bookmark object if values are emitted from store
    */
   onStoreChange = () => {
-    let bookmarksFolder = BookmarkStore.getAllFolderBookmarks();
-    let bookmarks = _.find(bookmarksFolder, (folder) => folder.name === null);
+    const bookmarksFolder = BookmarkStore.getAllFolderBookmarks();
     this.setState({
       bookmarksFolder: _.reject(bookmarksFolder, (folder) => folder.name === null),
-      bookmarks: bookmarks.bookmark || []
+      bookmarks: _.find(bookmarksFolder, (folder) => folder.name === null)
     });
   }
 
@@ -74,11 +73,23 @@ export default class Home extends Component {
   }
 
   /**
+   * Call action to delete bookmark
+   * @param {String} folderId The folder id
+   * @param {String} bookmarkId The bookmark Id
+   */
+  deleteBookmark(folderId, bookmarkId) {
+    BookmarkAction.deleteBookmark({
+      folderId: folderId,
+      bookmarkId: bookmarkId
+    });
+  }
+
+  /**
    * render
    * @return {ReactElement} markup
    */
   render() {
-    let { bookmarksFolder, bookmarks } = this.state;
+    const { bookmarksFolder, bookmarks } = this.state;
     return (
       <div class="container">
         <AddBookmark />
@@ -88,7 +99,9 @@ export default class Home extends Component {
           {
             bookmarksFolder.map((folder) =>
               <BookmarksFolder
+                folderId={folder.id}
                 name={folder.name}
+                deleteBookmark = {this.deleteBookmark}
                 bookmarks={folder.bookmark || []}
                 onDrop={(bookmark) => this.handleDrop(folder.id, bookmark)}
                 key={folder.id} />
@@ -98,10 +111,14 @@ export default class Home extends Component {
         <div id="bookmark" className="bookmark-wrapper">
           <h5>Bookmarks</h5>
           {
-            bookmarks.map((bookmark) =>
-              <Bookmark bookmark={bookmark}
-                key={bookmark.id} />
-            )
+            bookmarks.bookmark ?
+              bookmarks.bookmark.map((bookmark) =>
+                <Bookmark bookmark={bookmark}
+                  folderId={bookmarks.id}
+                  deleteBookmark={this.deleteBookmark}
+                  key={bookmark.id} />
+              )
+            : null
           }
         </div>
       </div>

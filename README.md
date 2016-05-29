@@ -20,5 +20,9 @@ A web app for organizing bookmarks.
 * Install gulp
   <pre>npm install -g gulp</pre>
 
+##Build
+<pre>npm install</pre>
+<pre>gulp</pre>
+
 ##Start the server:
 <pre>npm start</pre>

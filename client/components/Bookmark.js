@@ -33,9 +33,13 @@ export default class Bookmark extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { bookmark, connectDragSource } = this.props;
+    const { bookmark, folderId, deleteBookmark, connectDragSource } = this.props;
     return connectDragSource(
       <div className="bookmark-container">
+        <div onClick={() => deleteBookmark(folderId, bookmark.id)}
+          className="delete-folder">
+          x
+        </div>
         <div> title: {bookmark.title} </div>
         <div> link: {bookmark.link} </div>
       </div>

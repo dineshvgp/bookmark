@@ -31,6 +31,7 @@
   cursor: move;
   float: left;
   opacity: 1;
+  position: relative;
 }
 
 .folder-container {
@@ -40,15 +41,17 @@
   margin-bottom: 1.5rem;
   color: white;
   padding: 1rem;
-  text-align: center;
   font-size: 1rem;
   line-height: normal;
   float: left;
-  background-color: #222;
+  background-color: gray;
+  position: relative;
 }
 
 .folder-name {
-  border: 1px solid;
+  border-bottom: 1px solid;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .modal-wrapper {
@@ -58,4 +61,36 @@
 
 .modal-wrapper a {
   font-size: 20px;
+}
+
+.delete-folder,
+.moved-bookmark .delete-bookmark,
+.bookmark-wrapper .delete-bookmark {
+  right: -6px;
+  top: -7px;
+  position: absolute;
+  background-color: #000;
+  padding: 0px 5px 2px 5px;
+  cursor: pointer;
+  border-radius: 50%;
+  line-height: normal;
+  color: #fff;
+}
+
+.moved-bookmark {
+  background-color: lightgray;
+  width: 100%;
+  padding: 3px 5px;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.moved-bookmark .delete-bookmark {
+  top: 2px;
+  right: 2px;
+}
+
+.moved-bookmark a {
+  width: calc(100% - 30px);
+  word-wrap: break-word;
 }

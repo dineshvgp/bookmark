@@ -26,13 +26,33 @@ const BookmarkAction = {
     });
   },
   /**
-  * Action to create bookmark
+  * Action to create folder
   * @emits {Constants.CREATE_FOLDER}
    */
   createFolder(folder) {
     AppDispatcher.dispatch({
       actionType: Constants.CREATE_FOLDER,
       data: folder
+    });
+  },
+  /**
+  * Action to delete folder
+  * @emits {Constants.DELETE_FOLDER}
+   */
+  deleteFolder(id) {
+    AppDispatcher.dispatch({
+      actionType: Constants.DELETE_FOLDER,
+      data: id
+    });
+  },
+  /**
+  * Action to delete bookmark
+  * @emits {Constants.DELETE_BOOKMARK}
+   */
+  deleteBookmark(data) {
+    AppDispatcher.dispatch({
+      actionType: Constants.DELETE_BOOKMARK,
+      data: data
     });
   }
 };

@@ -74,7 +74,7 @@ const BookmarkStore = _.extend({}, EventEmitter.prototype, {
  * @todo yet to handle errs
  */
 AppDispatcher.register(function(payload) {
-  let {actionType, data} = payload;
+  const {actionType, data} = payload;
   switch (actionType) {
     case Constants.ALL_FOLDER_WITH_BOOKMARKS:
       BookmarkApi.fetchAllFolders().then((response) => {
@@ -102,6 +102,32 @@ AppDispatcher.register(function(payload) {
     case Constants.CREATE_FOLDER:
       BookmarkApi.createFolder(data).then((response) => {
         _allFolderBookmarks.push(response.data);
+        BookmarkStore.emitChange();
+      }, (err)=> {
+        console.log("err", err);
+      });
+      break;
+    case Constants.DELETE_FOLDER:
+      BookmarkApi.deleteFolder(data).then((response) => {
+        const folderIndex = _.findIndex(_allFolderBookmarks, {
+          id: data
+        });
+        _allFolderBookmarks.splice(folderIndex, 1);
+        BookmarkStore.emitChange();
+      }, (err)=> {
+        console.log("err", err);
+      });
+      break;
+    case Constants.DELETE_BOOKMARK:
+      BookmarkApi.deleteBookmark(data).then((response) => {
+        let folder = _allFolderBookmarks[
+          _.findIndex(_allFolderBookmarks, {
+            id: data.folderId
+          })
+        ];
+        folder.bookmark.splice(
+          _.findIndex(folder.bookmark, {id: data.bookmarkId}), 1
+        );
         BookmarkStore.emitChange();
       }, (err)=> {
         console.log("err", err);

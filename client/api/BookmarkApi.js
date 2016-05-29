@@ -27,6 +27,22 @@ import api from "axios";
    */
   createFolder(data) {
     return api.post("/api/bookmarkFolders", data);
+  },
+  /**
+   * Api to delete folder
+   *
+   * @return {object} Promise
+   */
+  deleteFolder(data) {
+    return api.delete(`/api/bookmarkFolders/${data}`);
+  },
+  /**
+   * Api to delete bookmark
+   *
+   * @return {object} Promise
+   */
+  deleteBookmark(data) {
+    return api.delete(`/api/bookmarkFolders/${data.folderId}/bookmark/${data.bookmarkId}`);
   }
 };
 

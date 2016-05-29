@@ -4,5 +4,7 @@ import keyMirror from "keymirror";
 export default keyMirror({
   ALL_FOLDER_WITH_BOOKMARKS: null,
   CREATE_BOOKMARK: null,
-  CREATE_FOLDER: null
+  CREATE_FOLDER: null,
+  DELETE_FOLDER: null,
+  DELETE_BOOKMARK: null
 });

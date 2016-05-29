@@ -46,7 +46,7 @@ export default class AddBookmark extends Component {
    * Call create bookmark action
    */
   onSubmit = () => {
-    let bookmark = this.state;
+    const bookmark = this.state;
     if(bookmark.title && bookmark.link) {
       BookmarkAction.createBookmark(bookmark);
       this.el.find("#create-bookmark").closeModal();
