@@ -35,7 +35,7 @@
 }
 
 .folder-container {
-  height: 12rem;
+  min-height: 12rem;
   width: 12rem;
   margin-right: 1.5rem;
   margin-bottom: 1.5rem;

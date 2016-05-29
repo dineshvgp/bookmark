@@ -43,7 +43,8 @@ export default class AddBookmark extends Component {
   }
 
   /**
-   *
+   * Validate Bookmark
+   * @ref: http://stackoverflow.com/questions/18568244/url-validation-regex-url-just-valid-with-http
    */
   validateBookmark = () => {
     const { title, link } = this.state;
