@@ -29,7 +29,6 @@
     "loopback-component-explorer": "^2.1.0",
     "loopback-connector-mongodb": "^1.15.2",
     "loopback-datasource-juggler": "^2.39.0",
-    "main-bower-files": "^2.13.1",
     "react": "^15.1.0",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
