@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-//Actios and stores
 import BookmarkAction from "../actions/BookmarkAction";
+import ErrorMessages from "../utils/ValidationMessages";
 
 /**
  * Add AddFolder Component
@@ -46,15 +46,19 @@ export default class AddFolder extends Component {
    */
   onSubmit = () => {
     let folder = this.state;
-    if(folder) {
+    if(folder.name) {
       folder.bookmark = [];
       BookmarkAction.createFolder(folder);
       this.el.find("#create-folder").closeModal();
       this.setState({
         name: ""
       });
+    } else {
+      const timeToShow = 2000;
+      Materialize.toast(ErrorMessages.folderRequired, timeToShow);
     }
   }
+
   /**
    * render
    * @return {ReactElement} markup

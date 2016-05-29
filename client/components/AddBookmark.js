@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-//Actios and stores
 import BookmarkAction from "../actions/BookmarkAction";
+import ErrorMessages from "../utils/ValidationMessages";
 
 /**
  * Add Bookmark Component
@@ -43,11 +43,34 @@ export default class AddBookmark extends Component {
   }
 
   /**
+   *
+   */
+  validateBookmark = () => {
+    const { title, link } = this.state;
+    const timeToShow = 2000;
+    if(!title) {
+      Materialize.toast(ErrorMessages.titleRequired, timeToShow);
+      return false;
+    }
+    if(!link) {
+      Materialize.toast(ErrorMessages.linkRequired, timeToShow);
+      return false;
+    } else {
+      const urlRegex = new RegExp("^http(s)?:\/\/(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$");
+      if(!urlRegex.test(link)) {
+        Materialize.toast(ErrorMessages.invalidLink, timeToShow);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * Call create bookmark action
    */
   onSubmit = () => {
     const bookmark = this.state;
-    if(bookmark.title && bookmark.link) {
+    if(this.validateBookmark()) {
       BookmarkAction.createBookmark(bookmark);
       this.el.find("#create-bookmark").closeModal();
       this.setState({
@@ -56,6 +79,7 @@ export default class AddBookmark extends Component {
       });
     }
   }
+
   /**
    * render
    * @return {ReactElement} markup

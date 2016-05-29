@@ -3,6 +3,7 @@ import {EventEmitter} from "events";
 import AppDispatcher from "../dispatcher/AppDispatcher";
 import Constants from "../constants/Constants";
 import BookmarkApi from "../api/BookmarkApi";
+import HandleError from "../utils/ErrorMessageHandler";
 
 let _allFolderBookmarks = {};
 
@@ -80,8 +81,8 @@ AppDispatcher.register(function(payload) {
       BookmarkApi.fetchAllFolders().then((response) => {
         _allFolderBookmarks = response.data;
         BookmarkStore.emitChange();
-      }, (err)=> {
-        console.log("err", err);
+      }, (err) => {
+        HandleError.evaluateError(err);
       });
       break;
     case Constants.CREATE_BOOKMARK:
@@ -95,16 +96,16 @@ AppDispatcher.register(function(payload) {
         bookmarksWithoutFolder.bookmark = bookmarksWithoutFolder.bookmark || [];
         bookmarksWithoutFolder.bookmark.push(response.data);
         BookmarkStore.emitChange();
-      }, (err)=> {
-        console.log("err", err);
+      }, (err) => {
+        HandleError.evaluateError(err);
       });
       break;
     case Constants.CREATE_FOLDER:
       BookmarkApi.createFolder(data).then((response) => {
         _allFolderBookmarks.push(response.data);
         BookmarkStore.emitChange();
-      }, (err)=> {
-        console.log("err", err);
+      }, (err) => {
+        HandleError.evaluateError(err);
       });
       break;
     case Constants.DELETE_FOLDER:
@@ -114,8 +115,8 @@ AppDispatcher.register(function(payload) {
         });
         _allFolderBookmarks.splice(folderIndex, 1);
         BookmarkStore.emitChange();
-      }, (err)=> {
-        console.log("err", err);
+      }, (err) => {
+        HandleError.evaluateError(err);
       });
       break;
     case Constants.DELETE_BOOKMARK:
@@ -129,16 +130,16 @@ AppDispatcher.register(function(payload) {
           _.findIndex(folder.bookmark, {id: data.bookmarkId}), 1
         );
         BookmarkStore.emitChange();
-      }, (err)=> {
-        console.log("err", err);
+      }, (err) => {
+        HandleError.evaluateError(err);
       });
       break;
     case Constants.MOVE_BOOKMARK:
       const { oldFolderId, newFolderId, bookmark } = data;
       BookmarkApi.moveBookmark(data).then((response) => {
         BookmarkStore.handleDrop(oldFolderId, newFolderId, bookmark);
-      }, (err)=> {
-        console.log("err", err);
+      }, (err) => {
+        HandleError.evaluateError(err);
       });
       break;
     default:

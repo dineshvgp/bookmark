@@ -94,3 +94,8 @@
   width: calc(100% - 30px);
   word-wrap: break-word;
 }
+
+.toast {
+  background-color: #fff;
+  color: red;
+}
